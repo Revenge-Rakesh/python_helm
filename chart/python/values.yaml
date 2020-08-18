@@ -1,0 +1,41 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+revisionHistoryLimit: 1
+image:
+  repository: aleksxp/docker-eve-python 
+  tag: 1.0.0
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 50m
+      memory: 80Mi
+  readinessProbe: {}
+  # Example (replace readinessProbe: {} with the following):
+  # readinessProbe:
+  #   httpGet:
+  #     path: /ready
+  #     port: 3000
+  #   initialDelaySeconds: 3
+  #   periodSeconds: 5
+  livenessProbe: {}
+  # Example (replace livenessProbe: {} with the following)::
+  # livenessProbe:
+  #   httpGet:
+  #     path: /live
+  #     port: 3000
+  #   initialDelaySeconds: 40
+  #   periodSeconds: 10  
+service:
+  name: Node
+  type: NodePort
+  servicePort: 3000
+hpa:
+  enabled: false
+  minReplicas: 5
+  maxReplicas: 10
+  metrics:
+    cpu:
+      targetAverageUtilization: 25
+    memory:
+      targetAverageUtilization: 80      
